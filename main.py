@@ -47,6 +47,8 @@ matches = driver.find_element(By.TAG_NAME, "pre").text
 # TODO check the delay in case the json parse happens sooner than data fetch
 data = json.loads(matches)
 
+# TODO Save json
+
 # print(data)
 
 driver.quit()
