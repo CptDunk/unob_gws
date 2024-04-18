@@ -19,15 +19,15 @@ Vytvořte a publikujte **pypi package**. Součastí github respository (source f
 
 Hlavní funkce **gather()** pracuje s následujícími parametry:
     
-    - username: Přihlašovací jméno<br />
+    - username: Přihlašovací jméno
 
-    - password: Přihlašovací heslo<br />
+    - password: Přihlašovací heslo
     
-    - config: {paths: {planovaneudalosti: “”, planovanivyuky_attributy: “”, vav_departments: “”. … }} (defaultni hodnota)<br />
+    - config: {paths: {planovaneudalosti: “”, planovanivyuky_attributy: “”, vav_departments: “”. … }} (defaultni hodnota)
     
-    - output (systemdata.json, writetogql)<br />
+    - output (systemdata.json, writetogql)
     
-    - **extras (token!)<br />
+    - **extras (token!)
 
 U entit naplňte všechny atributy, pokud ve zdroji některé atributy nejsou, domluvte se na jejich dummy values.<br />
 
