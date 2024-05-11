@@ -191,17 +191,5 @@
             "name_en": "facility management",
             "id": "de8654be-e776-4b6e-bb1e-2d5c949aa1eb"
         }
-
-    ], 
-    "???????????????????acprogramgroups": [
-        {"id": "ce250798-b095-11ed-9bd8-0242ac110002" }
-    ],
-    "??????????acprograms": [
-        {
-            "id": "2766fc9a-b095-11ed-9bd8-0242ac110002",
-            "type_id": "fd4f0980-9315-11ed-9b95-0242ac110002",
-            "lastchange": "2023-04-19T08:00:00",
-            "name": "IT Technologie", "name_en": "" 
-        }
     ]
 }

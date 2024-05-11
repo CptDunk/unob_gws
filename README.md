@@ -44,12 +44,24 @@ Pokud máte u entit k dispozici atributy navíc, navrhněte rozšíření GQL en
 
 - Begining of group parsing <br />
 
+### 11/05/2024 <br />
+
+- Parse groups: <br />
+
+    - Filter lists - nyní načte každou dvojici samostatně <br />
+
+    - Filter duplicities (based on IDs) - Smaže neoriginální dvojičky <br />
+
 # TODO
 
-- externalIDs type<br />
+- Zdroj dat 2. a 3.?<br />
 
-- Parse groups:<br />
-    
-    - Filter lists<br />
+- externalIDs<br />
 
-    - Filter duplicities (based on IDs)<br />
+- GroupTypes - Které jsou nadřazené a jaké to jsou<br />
+
+- Které dvojice jmen skupin s ID jsou správné (kde najdeme external IDs)<br />
+
+- Finalizace datové struktury<br />
+
+- Nahrání dat přes GQL endpoint<br />
