@@ -2,6 +2,9 @@
 
 repository for school web scraping project of unob IS
 
+### Todos
+ - implement superior web scraping code
+
 ## Task
 
 ### 2. Naplnění dat o skupinách
@@ -52,15 +55,27 @@ Pokud máte u entit k dispozici atributy navíc, navrhněte rozšíření GQL en
 
     - Filter duplicities (based on IDs) - Smaže neoriginální dvojičky <br />
 
+
+### 17/05/2024 <br />
+  - Fixed issue with false IDs(zeroes in the beginnings of ID lists)
+    - reintroduction to duplicate values
+
+### 24/05/2024 <br />
+  - fixed issue with duplicate values
+### 27/05/2024 <br />
+  - Partial web scraping implemented
+  - small tweaks to the code
+
+
 # TODO
 
-- Zdroj dat 2. a 3.?<br />
+- Finish scraping of all faculties and integrate newly found website aswell
 
-- externalIDs<br />
+- externalIDs(create our own -> add UUIDs where needed, compare sources, etc)<br />
 
 - GroupTypes - Které jsou nadřazené a jaké to jsou<br />
 
-- Které dvojice jmen skupin s ID jsou správné (kde najdeme external IDs)<br />
+- Které dvojice jmen skupin s ID jsou správné (kde najdeme external IDs) - we will use externalIds from uois and if there is any missing we create our own<br /> 
 
 - Finalizace datové struktury<br />
 
