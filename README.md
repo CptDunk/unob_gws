@@ -2,9 +2,6 @@
 
 repository for school web scraping project of unob IS
 
-### Todos
- - implement superior web scraping code
-
 ## Task
 
 ### 2. Naplnění dat o skupinách
