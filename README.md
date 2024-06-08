@@ -68,7 +68,9 @@ Pokud máte u entit k dispozici atributy navíc, navrhněte rozšíření GQL en
   - Created ExternalIDs for difference sources
   - Které dvojice jmen skupin s ID jsou správné (kde najdeme external IDs) - we will use externalIds from uois and if there is any missing we create our own - #Resolved#<br />
 ### 07/06/2024 <br />
-  - merged all data sources(3)
+  - merged all data sources(3) <br />
+### 07/06/2024/20:50 <br />
+  - created test pypi package of the project
 
 # TODO
 - can some dummy uuids be used in current data?
