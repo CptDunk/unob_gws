@@ -6,14 +6,22 @@
 #So Far we have:
 # webscraper that logs into the website
 # is capable of scraping all pages of the study programs
-
-#TODO
 # Find out "ids" of the other faculties(FVL is 633)
 # other sources?
 # Extract all study groups from FVT faculty study programs
 # Extract all study groups from other faculties
 # Include website that defines University groups
 # cross refference the groups with rest of the sources and create externalIds accordingly(if missing)
+# First TODO Finished (06.06. 2024)
+# Revision 08/06/2024: # - for systemdata.json add "externalids", "externalidtypes" and "exterlanidcategories"
+# - Switch for sources(0 - study plan, 1 - MojeAP, 2 - dymado)
+# - make single systemdata.json output
+# - add switch so dymado doesnt get error when trying to access key "ID" which is none("UIC")
+# - load systemdata again and check for non uuid mastergroups, if yes, sift through dymado and replace with ID
+
+
+#TODO 2
+# dymado is manualy created(but only one source) is it neccessary to "automate"?
 
 
 from functools import cache, lru_cache
@@ -29,8 +37,10 @@ from pathlib import Path
 from uuid import uuid4
 import json
 
-ids = ["369"]#, "633"] #after i start working with other faculties
+from data_Cruncher import merge_function, save_as_json
+
 mojeapid = "ctl00_ctl40_g_ba0590ba_842f_4a3a_b2ea_0c665ea80655_ctl00_LvApplicationGroupList_ctrl1_ctl00_LvApplicationsList_ctrl4_btnApp"
+
 
 class ScraperBase:
     def __init__(self,
@@ -77,8 +87,6 @@ class ScraperBase:
         # username, password
         #
 
-
-
         driver = self.getDriver()
         driver.get("https://intranet.unob.cz/aplikace/SitePages/DomovskaStranka.aspx")
 
@@ -99,6 +107,7 @@ class ScraperBase:
 
         return driver
 
+
     @cache
     def loginApp(self, app_id = 0):
         driver = self.login()
@@ -110,7 +119,7 @@ class ScraperBase:
             expected_conditions.presence_of_element_located((By.ID, app_id))
         )
         elem.click()
-        time.sleep(1)
+        time.sleep(3)
         return driver
 
     def scrapepage(self, url):
@@ -119,15 +128,19 @@ class ScraperBase:
         # appid = self.guessAppId(url)
         webdriver = self.loginApp()
         # webdriver = self.openWeb()
-        print("login successful?")
 
         webdriver.get(url)
+        time.sleep(1)
         # mozna budete muset zmenit podminku, pokud zdroj vyuziva intenzivne javascript (kresli stranku na klientovi)
-        # WebDriverWait(webdriver, self.timeout).until(
-        #     expected_conditions.presence_of_element_located((By.ID, "FakultaCard"))
+        #  WebDriverWait(webdriver, self.timeout).until(
+        #      expected_conditions.presence_of_element_located((By.ID, "FakultaCard"))
         # )
+        WebDriverWait(webdriver, self.timeout).until(
+            expected_conditions.presence_of_element_located((By.ID, "StudiumSkupinaProgram"))
+        )
         result = webdriver.page_source
         return result
+
 
     def openUrl(self, url):
         """vytvari index stranek, aby se minimalizovala komunikace se serverem,
@@ -135,10 +148,20 @@ class ScraperBase:
         pokud zdroj nema permalinky, ma tento pristup stinne stranky = stejna url maji jiny obsah
         index je ulozen jako json, keys jsou urls, values jsou uuids = nazvy souboru, kde jsou stranky ulozeny
         """
+        # print(self.pageindex.get(url, None))
+        if "/MojeAP/" in url:
+            self.cachedir = "pagecache/MojeAP/"
+            Path(self.cachedir).mkdir(exist_ok=True)
+        else:
+            self.cachedir = "pagecache/"
+
         pageid = self.pageindex.get(url, None)
+
         result = ""
         if pageid:
             filename = self.cachedir + pageid + ".html"
+            # print(filename)
+
             with open(filename, "r", encoding="utf-8") as f:
                 lines = f.readlines()
                 result = "\n".join(lines)
@@ -151,26 +174,54 @@ class ScraperBase:
                 f.write(result)
             self.writeCache()
 
-        print("reading successful?")
         return result
 
 username = ""
 password = ""
 
+# load creds in order to login
 with open("res/credentials.json","r",encoding="utf-8") as creds:
     c = json.load(creds)
     username = c["user"]
     password = c["login"]
 
+# create instance of ScraperBase
 scBase = ScraperBase(username, password)
 
 
-# programs is a list of all study programs in the FVT faculty
+# faculties contains all study programs of VLF FVL and FVT faculties in format{faculty: [study programs], etc...}
+faculties = json.load(open("res/faculties.json", "r", encoding="utf-8"))
+skupiny = {'MojeAP': {"FVL": [],"FVT": [], "VLF": []}}
+with open ("pages/pageindex.json", "r", encoding="utf-8") as f:
+    pages = json.load(f)
+    #TODO
+    # - is it neccessary to split into separate dicts(still haven't used it)?, but looks nice
+    # idea - maybe when defining master groups, instead of faculty(plain) we use corresponding faculties?
+    tempDict = {"FVL": {}, "FVT": {}, "VLF": {}}
+    for fakulta in faculties:
+        # print(fakulta)
+        for program in faculties[fakulta]:
+            url = f"https://apl.unob.cz/MojeAP/Program/{program}"
+            test = scBase.openUrl(url)
+            # retrieve div class "studiumSkupina"
+            mDrive = scBase.getDriver()
+            if pages.get(url, None) is not None:
+                mDrive.get(f"file:///{Path.cwd()}/{scBase.cachedir}{pages.get(url, None)}.html")
+                # get element of groups, iterate and save id and name(for references)
+                # save list as separate json
+                study_groups = mDrive.find_elements(By.ID, "StudiumSkupina")
+                for group in study_groups:
+                    group_ID = group.find_element(By.TAG_NAME, "a").get_attribute('href').split("Uic/")[1]
+                    group_Name = group.text
+                    # print(f"ID: {group_ID} - Name: {group_Name}")
+                    tempDict[fakulta][group_ID] = group_Name
+            else:
+                pass
 
-programs = ["4", "18", "19", "2949", "2950", "2951", "2968", "2969", "2970", "2979", "2980", "2981", "2998",
-            "3884", "3899", "3900"]
-for program in programs:
-    url = f"https://apl.unob.cz/MojeAP/Program/{program}"
-    scBase.openUrl(url)
+            # mDrive.get(f"pagecache/{pages.get(url, None)}")
 
+for fakulta in faculties:
+    for group in tempDict[fakulta]:
+        skupiny['MojeAP'][fakulta].append(dict({"id": group, "name": tempDict[fakulta][group]}))
 
+save_as_json("res/MojeAP_groups_rev1.0", skupiny)

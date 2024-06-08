@@ -65,17 +65,21 @@ Pokud máte u entit k dispozici atributy navíc, navrhněte rozšíření GQL en
 ### 27/05/2024 <br />
   - Partial web scraping implemented
   - small tweaks to the code
-
+### 04/06/2024 <br />
+  - Finish scraping of all faculties and integrate newly found website aswell
+### 06/06/2024 <br />
+  - Created ExternalIDs for difference sources
+  - Které dvojice jmen skupin s ID jsou správné (kde najdeme external IDs) - we will use externalIds from uois and if there is any missing we create our own - #Resolved#<br />
+### 07/06/2024 <br />
+  - merged all data sources(3)
 
 # TODO
-
-- Finish scraping of all faculties and integrate newly found website aswell
-
-- externalIDs(create our own -> add UUIDs where needed, compare sources, etc)<br />
-
+- can some dummy uuids be used in current data?
+- Mastergroup_id of study groups(FAC or (FVL,VLF,FVT))?
+- all source scraping automated?
+- creation of outer_id for groups without it
+- !!!Define missing grouptypes (from 3rd source)!!!
 - GroupTypes - Které jsou nadřazené a jaké to jsou<br />
-
-- Které dvojice jmen skupin s ID jsou správné (kde najdeme external IDs) - we will use externalIds from uois and if there is any missing we create our own<br /> 
 
 - Finalizace datové struktury<br />
 

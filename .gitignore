@@ -1,6 +1,5 @@
 credentials.json
 *.json
-!systemdata.json
 docs
 pagecache
 pages
