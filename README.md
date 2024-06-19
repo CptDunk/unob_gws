@@ -71,6 +71,9 @@ Pokud máte u entit k dispozici atributy navíc, navrhněte rozšíření GQL en
   - merged all data sources(3) <br />
 ### 07/06/2024/20:50 <br />
   - created test pypi package of the project
+### 19/06/2024 <br />
+  - gql upload (- Nahrání dat přes GQL endpoint)<br />
+  - found duplicity<br />
 
 # TODO
 - can some dummy uuids be used in current data?
@@ -79,7 +82,10 @@ Pokud máte u entit k dispozici atributy navíc, navrhněte rozšíření GQL en
 - creation of outer_id for groups without it
 - !!!Define missing grouptypes (from 3rd source)!!!
 - GroupTypes - Které jsou nadřazené a jaké to jsou<br />
+- Odstranit 1. zdroj dat = vyřešit outer_id 0
+- Duplicity! Zaítm jen jedna
+
 
 - Finalizace datové struktury<br />
 
-- Nahrání dat přes GQL endpoint<br />
+
