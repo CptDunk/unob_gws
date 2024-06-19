@@ -12,8 +12,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import asyncio
 import aiohttp
-import aiofiles
-
 
 class DBWriter:
     def __init__(self, username="john.newbie@world.com", password="john.newbie@world.com"):
