@@ -74,18 +74,19 @@ Pokud máte u entit k dispozici atributy navíc, navrhněte rozšíření GQL en
 ### 19/06/2024 <br />
   - gql upload (- Nahrání dat přes GQL endpoint)<br />
   - found duplicity<br />
+### 20/06/2024 <br />
+  - Odstranit 1. zdroj dat = vyřešit outer_id 0
+  - Duplicity! All resolved
+  - Mastergroup_id of study groups(FAC or (FVL,VLF,FVT))? - just FAC
 
 # TODO
 - can some dummy uuids be used in current data?
-- Mastergroup_id of study groups(FAC or (FVL,VLF,FVT))?
 - all source scraping automated?
 - creation of outer_id for groups without it
 - !!!Define missing grouptypes (from 3rd source)!!!
 - GroupTypes - Které jsou nadřazené a jaké to jsou<br />
-- Odstranit 1. zdroj dat = vyřešit outer_id 0
-- Duplicity! Zaítm jen jedna
+- Make only one mastergroup_id(no lists)
 
-
-- Finalizace datové struktury<br />
+- Finalizace datové struktury<br /> - partial, need consulting
 
 
